@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33110.190
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Project_Tasks.Domain", "Project_Tasks.Domain\Project_Tasks.Domain.csproj", "{285242BC-6941-4B3B-8290-EFD49FDD258C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Project_Tasks.Domain", "Project_Tasks.Domain\Project_Tasks.Domain.csproj", "{285242BC-6941-4B3B-8290-EFD49FDD258C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Project_Tasks.Data", "Project_Tasks.Data\Project_Tasks.Data.csproj", "{99F08C8F-ACC8-4FA2-B623-DB56DFC07BBE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Project_Tasks.Data", "Project_Tasks.Data\Project_Tasks.Data.csproj", "{99F08C8F-ACC8-4FA2-B623-DB56DFC07BBE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Project_Tasks.WebAPI", "Project_Tasks.WebAPI\Project_Tasks.WebAPI.csproj", "{04A5EFF9-CA99-403E-8BF2-D1C7129ED91F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{99F08C8F-ACC8-4FA2-B623-DB56DFC07BBE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{99F08C8F-ACC8-4FA2-B623-DB56DFC07BBE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{99F08C8F-ACC8-4FA2-B623-DB56DFC07BBE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{04A5EFF9-CA99-403E-8BF2-D1C7129ED91F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{04A5EFF9-CA99-403E-8BF2-D1C7129ED91F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{04A5EFF9-CA99-403E-8BF2-D1C7129ED91F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{04A5EFF9-CA99-403E-8BF2-D1C7129ED91F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

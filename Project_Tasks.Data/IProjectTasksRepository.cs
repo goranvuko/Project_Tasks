@@ -6,5 +6,6 @@ namespace Project_Tasks.Data
     {
         void AddProject(Project project);
         IEnumerable<Project> GetAllProjects();
+        Project GetProject(int id);
     }
 }

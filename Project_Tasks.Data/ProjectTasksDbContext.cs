@@ -12,12 +12,16 @@ namespace Project_Tasks.Data
         public DbSet<Entities.Task> Tasks { get; set; }
         public DbSet<Project> Projects  { get; set; }
 
-       
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        public ProjectTasksDbContext(DbContextOptions<ProjectTasksDbContext> options)
+       : base(options)
         {
-            optionsBuilder
-                .UseSqlServer(@"Data Source=DESKTOP-0UCKG6H\SQLEXPRESS;Initial Catalog=ProjectTasksDb;Trusted_Connection=True;Integrated Security=True;Trust Server Certificate=True;");
         }
+
+        //protected override void onconfiguring(dbcontextoptionsbuilder optionsbuilder)
+        //{
+        //    optionsbuilder
+        //        .usesqlserver(@"data source=desktop-0uckg6h\sqlexpress;initial catalog=projecttasksdb;trusted_connection=true;integrated security=true;trust server certificate=true;");
+        //}
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

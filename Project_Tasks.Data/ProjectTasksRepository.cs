@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Project_Tasks.Data
 {
-    public class ProjectTasksRepository : I
+    public class ProjectTasksRepository : IProjectTasksRepository
     {
         private readonly ProjectTasksDbContext dbContext;
 
@@ -20,6 +20,10 @@ namespace Project_Tasks.Data
         {
             dbContext.Projects.Add(project);
             dbContext.SaveChanges();
+        }
+        public Project GetProject(int id)
+        {
+            return dbContext.Projects.SingleOrDefault(p => p.Id == id);
         }
         public IEnumerable<Project> GetAllProjects()
         {
