@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Project_Tasks.Data;
+using Microsoft.Extensions.Configuration;
+using Project_Tasks.WebAPI;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,8 +12,10 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<ProjectTasksDbContext>(opt =>
-    opt.UseSqlServer("Data Source=DESKTOP-0UCKG6H\\SQLEXPRESS;Initial Catalog=ProjectTasksDb;Trusted_Connection=True;Integrated Security=True;Trust Server Certificate=True;"));
-builder.Services.AddTransient<IProjectTasksRepository, ProjectTasksRepository>();
+    opt.UseSqlServer(builder.Configuration.GetConnectionString("DbConnectionString")));
+builder.Services.AddTransient<IProjectRepository,ProjectRepository>();
+builder.Services.AddTransient<ITaskRepository, TaskRepository>();
+builder.Services.AddTransient<IProjectMapper, ProjectMapper>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

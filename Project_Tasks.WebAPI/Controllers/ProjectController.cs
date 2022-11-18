@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Project_Tasks.Data;
 using Project_Tasks.Data.Entities;
+using Project_Tasks.WebAPI.Models;
 
 namespace Project_Tasks.WebAPI.Controllers
 {
@@ -8,17 +9,39 @@ namespace Project_Tasks.WebAPI.Controllers
     [Route("[controller]")]
     public class ProjectController : ControllerBase
     {
-        private readonly IProjectTasksRepository projectTasksRepository;
+        private readonly IProjectRepository projectRepository;
+        private readonly IProjectMapper projectMapper;
 
-        public ProjectController(IProjectTasksRepository projectTasksRepository)
+        public ProjectController(IProjectRepository projectTasksRepository, IProjectMapper projectMapper)
         {
-            this.projectTasksRepository = projectTasksRepository;
+            this.projectRepository = projectTasksRepository;
+            this.projectMapper = projectMapper;
         }
 
         [HttpGet(Name = "GetProjects")]
-        public IEnumerable<Project> GetAll()
+        public IActionResult GetAll()
         {
-           return projectTasksRepository.GetAllProjects();
+            var projects = projectRepository.GetAllProjects();
+           return Ok(projects.Select(p => this.projectMapper.MapToDto(p)));
         }
+        [HttpPost(Name ="AddProject")]
+        public IActionResult Add(AddProjectDto projectDto)
+        {
+
+            projectRepository.AddProject(project);
+            return Ok(project);
+        }
+        [HttpGet("{id}")]
+        //[Route("{id}")]
+        public IActionResult GetProjectById(int id)
+        {
+            Project project = projectRepository.GetProject(id);
+            if (project == null)
+            {
+                return NotFound();
+            }
+            return Ok(this.projectMapper.MapToDto(project));
+        }
+
     }
 }
