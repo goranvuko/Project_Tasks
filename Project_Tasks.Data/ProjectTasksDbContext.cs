@@ -17,12 +17,6 @@ namespace Project_Tasks.Data
         {
         }
 
-        //protected override void onconfiguring(dbcontextoptionsbuilder optionsbuilder)
-        //{
-        //    optionsbuilder
-        //        .usesqlserver(@"data source=desktop-0uckg6h\sqlexpress;initial catalog=projecttasksdb;trusted_connection=true;integrated security=true;trust server certificate=true;");
-        //}
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Project>()

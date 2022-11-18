@@ -2,7 +2,7 @@
 
 namespace Project_Tasks.Data
 {
-    public interface IProjectTasksRepository
+    public interface IProjectRepository
     {
         void AddProject(Project project);
         IEnumerable<Project> GetAllProjects();

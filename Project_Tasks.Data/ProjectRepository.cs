@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace Project_Tasks.Data
 {
-    public class ProjectTasksRepository : IProjectTasksRepository
+    public class ProjectRepository : IProjectRepository
     {
         private readonly ProjectTasksDbContext dbContext;
 
-        public ProjectTasksRepository(ProjectTasksDbContext dbContext)
+        public ProjectRepository(ProjectTasksDbContext dbContext)
         {
             this.dbContext = dbContext;
         }
