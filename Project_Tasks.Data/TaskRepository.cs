@@ -14,10 +14,11 @@ namespace Project_Tasks.Data
         {
             this.dbContext = dbContext;
         }
-        public void AddTask(Entities.Task task)
+        public Entities.Task AddTask(Entities.Task task)
         {
             dbContext.Tasks.Add(task);
             dbContext.SaveChanges();
+            return task;
         }
         public Entities.Task GetTask(int id)
         {

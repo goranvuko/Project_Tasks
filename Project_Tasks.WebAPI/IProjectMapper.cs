@@ -6,5 +6,6 @@ namespace Project_Tasks.WebAPI
     public interface IProjectMapper
     {
         GetProjectDto MapToDto(Project entity);
+        Project MapToEntity(AddProjectDto projectDto);
     }
 }

@@ -22,14 +22,14 @@ namespace Project_Tasks.WebAPI.Controllers
         public IActionResult GetAll()
         {
             var projects = projectRepository.GetAllProjects();
-           return Ok(projects.Select(p => this.projectMapper.MapToDto(p)));
+            return Ok(projects.Select(this.projectMapper.MapToDto));
         }
         [HttpPost(Name ="AddProject")]
         public IActionResult Add(AddProjectDto projectDto)
         {
-
+            var project = this.projectMapper.MapToEntity(projectDto);
             projectRepository.AddProject(project);
-            return Ok(project);
+            return Ok(this.projectMapper.MapToDto(project));
         }
         [HttpGet("{id}")]
         //[Route("{id}")]

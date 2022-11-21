@@ -16,7 +16,9 @@ builder.Services.AddDbContext<ProjectTasksDbContext>(opt =>
 builder.Services.AddTransient<IProjectRepository,ProjectRepository>();
 builder.Services.AddTransient<ITaskRepository, TaskRepository>();
 builder.Services.AddTransient<IProjectMapper, ProjectMapper>();
+builder.Services.AddTransient<ITaskMapper, TaskMapper>();
 var app = builder.Build();
+
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
