@@ -25,6 +25,12 @@ namespace Project_Tasks.Data
         {
             return dbContext.Projects.SingleOrDefault(p => p.Id == id);
         }
+        public void DeleteProject(int id)
+        {
+            var project = new Project { Id = id };
+            dbContext.Projects.Remove(project);
+            dbContext.SaveChanges();
+        }
         public IEnumerable<Project> GetAllProjects()
         {
             return dbContext.Projects.ToList();

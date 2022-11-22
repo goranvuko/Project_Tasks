@@ -17,27 +17,33 @@ namespace Project_Tasks.WebAPI.Controllers
             this.taskMapper = taskMapper;
         }
         [HttpGet(Name = "GetTasks")]
-        public IActionResult GetAll()
+        public async Task<IActionResult> GetAll()
         {
-            var tasks = taskRepository.GetAllTasks();
+            var tasks = await taskRepository.GetAllTasks();
             return Ok(tasks.Select(this.taskMapper.MapToDto));
         }
         [HttpPost(Name = "AddTask")]
-        public IActionResult Add(AddTaskDto taskDto)
+        public async Task<IActionResult> Add(AddTaskDto taskDto)
         {
             var task = taskMapper.MapToEntity(taskDto);
-            var created = taskRepository.AddTask(task);
-            return Ok(this.taskMapper.MapToDto(created));
+            var created = await taskRepository.AddTask(task);
+            return CreatedAtAction(nameof(GetTaskById), new { id = created.Id }, this.taskMapper.MapToDto(created));
         }
         [HttpGet("{id}")]
-        public IActionResult GetTaskById(int id)
+        public async Task<IActionResult> GetTaskById(int id)
         {
-            Data.Entities.Task task = taskRepository.GetTask(id);
+            Data.Entities.Task task = await taskRepository.GetTaskAsync(id);
             if (task == null)
             {
                 return NotFound();
             }
             return Ok(this.taskMapper.MapToDto(task));
+        }
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            await this.taskRepository.DeleteTask(id);
+            return NoContent();
         }
     }
 }

@@ -29,10 +29,9 @@ namespace Project_Tasks.WebAPI.Controllers
         {
             var project = this.projectMapper.MapToEntity(projectDto);
             projectRepository.AddProject(project);
-            return Ok(this.projectMapper.MapToDto(project));
+            return CreatedAtAction(nameof(GetProjectById), new { id = project.Id }, this.projectMapper.MapToDto(project));
         }
         [HttpGet("{id}")]
-        //[Route("{id}")]
         public IActionResult GetProjectById(int id)
         {
             Project project = projectRepository.GetProject(id);

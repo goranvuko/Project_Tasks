@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,25 +15,26 @@ namespace Project_Tasks.Data
         {
             this.dbContext = dbContext;
         }
-        public Entities.Task AddTask(Entities.Task task)
+        public async System.Threading.Tasks.Task<Entities.Task> AddTask(Entities.Task task)
         {
             dbContext.Tasks.Add(task);
-            dbContext.SaveChanges();
+            await dbContext.SaveChangesAsync();
             return task;
         }
-        public Entities.Task GetTask(int id)
+        public async System.Threading.Tasks.Task<Entities.Task> GetTaskAsync(int id)
         {
-            return dbContext.Tasks.SingleOrDefault(t=> t.Id == id);
+            return await dbContext.Tasks.SingleOrDefaultAsync(t=> t.Id == id);
         }
 
-        public void DeleteTask(int id)
+        public async System.Threading.Tasks.Task DeleteTask(int id)
         {
-            dbContext.Tasks.Remove(GetTask(id));
-            dbContext.SaveChanges();
+            var task = new Entities.Task { Id = id };
+            dbContext.Tasks.Remove(task);
+            await dbContext.SaveChangesAsync();
         }
-        public IEnumerable<Entities.Task> GetAllTasks()
+        public async System.Threading.Tasks.Task<IEnumerable<Entities.Task>>  GetAllTasks()
         {
-            return dbContext.Tasks.ToList();
+            return await dbContext.Tasks.ToListAsync();
         }
         
     }

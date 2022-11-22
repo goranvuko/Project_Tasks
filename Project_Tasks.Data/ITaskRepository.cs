@@ -2,9 +2,9 @@
 {
     public interface ITaskRepository
     {
-        Entities.Task AddTask(Entities.Task task);
-        void DeleteTask(int id);
-        IEnumerable<Entities.Task> GetAllTasks();
-        Entities.Task GetTask(int id);
+        System.Threading.Tasks.Task<Entities.Task> AddTask(Entities.Task task);
+        System.Threading.Tasks.Task DeleteTask(int id);
+        System.Threading.Tasks.Task<IEnumerable<Entities.Task>>  GetAllTasks();
+        System.Threading.Tasks.Task<Entities.Task> GetTaskAsync(int id);
     }
 }
