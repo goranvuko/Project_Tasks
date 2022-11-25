@@ -12,7 +12,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<ProjectTasksDbContext>(opt =>
-    opt.UseSqlServer(builder.Configuration.GetConnectionString("DbConnectionString")));
+    opt.UseSqlServer(builder.Configuration.GetConnectionString("AZURE_SQL_CONNECTION")));
 builder.Services.AddTransient<IProjectRepository,ProjectRepository>();
 builder.Services.AddTransient<ITaskRepository, TaskRepository>();
 builder.Services.AddTransient<IProjectMapper, ProjectMapper>();
