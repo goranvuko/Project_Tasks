@@ -7,12 +7,12 @@ namespace Project_Tasks.WebAPI.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class ProjectController : ControllerBase
+    public class ProjectsController : ControllerBase
     {
         private readonly IProjectRepository projectRepository;
         private readonly IProjectMapper projectMapper;
 
-        public ProjectController(IProjectRepository projectTasksRepository, IProjectMapper projectMapper)
+        public ProjectsController(IProjectRepository projectTasksRepository, IProjectMapper projectMapper)
         {
             this.projectRepository = projectTasksRepository;
             this.projectMapper = projectMapper;
