@@ -28,7 +28,5 @@ namespace Project_Tasks.Data
             modelBuilder.Entity<Entities.Task>().Property(t => t.Name).HasMaxLength(50);
             modelBuilder.Entity<Entities.Task>().Property(t => t.Description).HasMaxLength(50);
         }
-
-
     }
 }
