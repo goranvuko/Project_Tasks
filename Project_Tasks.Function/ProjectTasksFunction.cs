@@ -25,8 +25,11 @@ namespace Project_Tasks.Function
                 .AddEnvironmentVariables()
                 .Build();
             var webApiBaseURL = config["WebApiURL"];
+            string CosmosDbURL = config["CosmosApiURL"];
 
             var webApiProjects =await GetAllProjectsFromApi(webApiBaseURL);
+
+            var cosmosProjects = await GetAllProjectsFromApi(CosmosDbURL);
         }
 
         private async Task<List<GetProjectDto>> GetAllProjectsFromApi(string webApiBaseURL)

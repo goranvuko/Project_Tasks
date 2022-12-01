@@ -14,5 +14,6 @@
     }
   },
   "version": "2.0",
-  "WebApiURL": "https://projecttasksgoran.azurewebsites.net"
+  "WebApiURL": "https://projecttasksgoran.azurewebsites.net",
+  "CosmosApiURL": "https://cosmosgoranprojecttask.azurewebsites.net/"
 }
