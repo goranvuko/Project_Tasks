@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Project_Tasks.Data", "Proje
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Project_Tasks.WebAPI", "Project_Tasks.WebAPI\Project_Tasks.WebAPI.csproj", "{04A5EFF9-CA99-403E-8BF2-D1C7129ED91F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Project_Tasks.CosmosWebAPI", "Project_Tasks.CosmosWebAPI\Project_Tasks.CosmosWebAPI.csproj", "{1E15225C-0214-4FA5-8506-F070E3698D0B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Project_Tasks.CosmosWebAPI", "Project_Tasks.CosmosWebAPI\Project_Tasks.CosmosWebAPI.csproj", "{1E15225C-0214-4FA5-8506-F070E3698D0B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Project_Tasks.Function", "Project_Tasks.Function\Project_Tasks.Function.csproj", "{E2BF97C1-CB71-429E-9074-762F62A4EAE9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{1E15225C-0214-4FA5-8506-F070E3698D0B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1E15225C-0214-4FA5-8506-F070E3698D0B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1E15225C-0214-4FA5-8506-F070E3698D0B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E2BF97C1-CB71-429E-9074-762F62A4EAE9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E2BF97C1-CB71-429E-9074-762F62A4EAE9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E2BF97C1-CB71-429E-9074-762F62A4EAE9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E2BF97C1-CB71-429E-9074-762F62A4EAE9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

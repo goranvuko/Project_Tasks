@@ -1,0 +1,18 @@
+{
+  "AzureCosmosDbSettings": {
+    "URL": "https://1eae7906-0ee0-4-231-b9ee.documents.azure.com:443/",
+    "PrimaryKey": "4uMa4Z7w9iSZimrwwuZGT04TVud8fuQZwj73bSqCjPyQqAKvzlfLaMdl8VJ6Z6NwBjVm0YCnnJySACDbSjPAdg==",
+    "DatabaseName": "GVCosmosDB",
+    "ContainerName": "Projects"
+  },
+  "logging": {
+    "applicationInsights": {
+      "samplingSettings": {
+        "isEnabled": true,
+        "excludedTypes": "Request"
+      }
+    }
+  },
+  "version": "2.0",
+  "WebApiURL": "https://projecttasksgoran.azurewebsites.net"
+}
