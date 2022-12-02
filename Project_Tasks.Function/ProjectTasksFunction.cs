@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
+using Microsoft.Azure.Cosmos;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Host;
 using Microsoft.Extensions.Configuration;
@@ -13,7 +14,14 @@ namespace Project_Tasks.Function
 {
     public class ProjectTasksFunction
     {
+        private readonly IProjectTasksService projectTasksService;
+        public ProjectTasksFunction(IProjectTasksService projectTasksService)
+        {
+            this.projectTasksService = projectTasksService;
+        }
+
         [FunctionName("ProjectTasksFunction")]
+
         //0 0 * * * * , run every hour
         public async Task Run([TimerTrigger("*/5 * * * * *")] TimerInfo myTimer, ILogger log, ExecutionContext context)
         {
@@ -25,32 +33,8 @@ namespace Project_Tasks.Function
                 .AddEnvironmentVariables()
                 .Build();
             var webApiBaseURL = config["WebApiURL"];
-            string CosmosDbURL = config["CosmosApiURL"];
-
-            var webApiProjects =await GetAllProjectsFromApi(webApiBaseURL);
-
-            var cosmosProjects = await GetAllProjectsFromApi(CosmosDbURL);
-        }
-
-        private async Task<List<GetProjectDto>> GetAllProjectsFromApi(string webApiBaseURL)
-        {
-            using (var client = new HttpClient())
-            {
-                client.BaseAddress = new Uri(webApiBaseURL);
-                client.DefaultRequestHeaders.Accept.Clear();
-                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                //GET Method
-                HttpResponseMessage response = await client.GetAsync("projects");
-                if (response.IsSuccessStatusCode)
-                {
-                    return await response.Content.ReadAsAsync<List<GetProjectDto>>();
-                }
-                else
-                {
-                    Console.WriteLine("Internal server Error");
-                    return await Task.FromResult<List<GetProjectDto>>(Enumerable.Empty<GetProjectDto>().ToList());
-                }
-            }
+            string cosmosDbURL = config["CosmosApiURL"];
+            await this.projectTasksService.Sync(webApiBaseURL, cosmosDbURL,"projects");
         }
     }
 }
