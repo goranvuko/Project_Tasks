@@ -15,7 +15,7 @@ public class ProjectCosmosService : IProjectCosmosService
     {
         var queryable = _container.GetItemLinqQueryable<Project>();
         using FeedIterator<Project> feed = queryable
-        .OrderByDescending(p => p.Code)
+        .OrderByDescending(p => p.Id)
         .ToFeedIterator();
 
         List<Project> results = new();
