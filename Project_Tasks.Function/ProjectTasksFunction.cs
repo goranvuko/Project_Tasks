@@ -38,7 +38,7 @@ namespace Project_Tasks.Function
             {
                 log.LogInformation($"Synchronisation started at {DateTime.Now}");
 
-                await this.projectTasksService.Sync(webApiBaseURL, cosmosDbURL, "Projects");
+                await this.projectTasksService.Sync(webApiBaseURL, cosmosDbURL);
 
                 log.LogInformation($"Synchronisation finished successfully at {DateTime.Now}");
             }

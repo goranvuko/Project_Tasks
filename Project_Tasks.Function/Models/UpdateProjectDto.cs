@@ -2,7 +2,7 @@
 
 namespace Project_Tasks.Function.Models
 {
-    public class UpdateProjectDto
+    public class UpdateProjectDto 
     {
         [JsonProperty("id")]
         public string Id { get; set; }

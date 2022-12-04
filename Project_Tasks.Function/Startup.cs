@@ -21,14 +21,16 @@ namespace Project_Tasks.Function
                 .GetValue<string>("PrimaryKey");
                 string dbName = section
                 .GetValue<string>("DatabaseName");
-                string containerName = section
-                .GetValue<string>("ContainerName");
+                string projectContainerName = section
+                .GetValue<string>("ProjectContainerName");
+                string taskContainerName = section
+                .GetValue<string>("TaskContainerName");
 
                 var cosmosClient = new CosmosClient(
                     url,
                     primaryKey
                 );
-                return new ProjectTasksService(cosmosClient, dbName, containerName);
+                return new ProjectTasksService(cosmosClient, dbName, projectContainerName,taskContainerName);
             });
         }
     }

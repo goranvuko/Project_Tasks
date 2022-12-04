@@ -11,18 +11,25 @@ namespace Project_Tasks.Function
 {
     public class ProjectTasksService : IProjectTasksService
     {
-        private readonly Container _container;
+        private readonly Container projectContainer;
+        private readonly Container taskContainer;
 
-        public ProjectTasksService(CosmosClient cosmosClient, string databaseName, string containerName)
+        public ProjectTasksService(CosmosClient cosmosClient, string databaseName, string projectContainerName,string taskContainerName)
         {
-            _container = cosmosClient.GetContainer(databaseName, containerName);
+            projectContainer = cosmosClient.GetContainer(databaseName, projectContainerName);
+            taskContainer = cosmosClient.GetContainer(databaseName, taskContainerName);
         }
-        public async Task Sync(string webApiURL, string cosmosDbURL, string route)
+        public async Task Sync(string webApiURL, string cosmosDbURL)
         {
-            var webApiProjects = await GetAllProjectsFromApi(webApiURL);
-            var cosmosProjects = await GetAllProjectsFromApi(cosmosDbURL);
+            await SyncProjects(webApiURL, cosmosDbURL);
+        }
 
-            var webApiProjectIds = webApiProjects.Select(t=> t.Id).ToList();
+        private async Task SyncProjects(string webApiURL, string cosmosDbURL)
+        {
+            var webApiProjects = await GetAllEntitiesFromApi<GetProjectDto>(webApiURL, "projects");
+            var cosmosProjects = await GetAllEntitiesFromApi<GetProjectDto>(cosmosDbURL, "projects");
+
+            var webApiProjectIds = webApiProjects.Select(t => t.Id).ToList();
             var cosmosProjectsIds = cosmosProjects.Select(t => t.Id).ToList();
             var idsToAdd = webApiProjectIds.Except(cosmosProjectsIds);
             var idsToDelete = webApiProjectIds.Except(cosmosProjectsIds);
@@ -31,14 +38,13 @@ namespace Project_Tasks.Function
             var entitiesToAdd = webApiProjects.Where(t => idsToAdd.Contains(t.Id));
             await AddNewProjects(entitiesToAdd);
 
-
             var entitiesToUpdate = webApiProjects.Where(t => idsToUpdate.Contains(t.Id));
             await UpdateExistingProjects(entitiesToUpdate);
 
             var entitiesToDelete = webApiProjects.Where(t => idsToDelete.Contains(t.Id));
             await DeleteExistingProjects(entitiesToDelete);
-
         }
+
         private async Task AddNewProjects(IEnumerable<GetProjectDto> projects)
         {
             foreach (var entity in projects)
@@ -47,7 +53,7 @@ namespace Project_Tasks.Function
                 {
                     var dto = new AddProjectDto { Id = entity.Id.ToString(), Code = entity.Code, Name = entity.Name };
                     var stringId = entity.Id.ToString();
-                    var response = await _container.CreateItemAsync(dto, new PartitionKey(stringId));
+                    var response = await projectContainer.CreateItemAsync(dto, new PartitionKey(stringId));
                 }
                 catch (Exception ex)
                 {
@@ -68,7 +74,7 @@ namespace Project_Tasks.Function
                     };
 
                     var stringId = entity.Id.ToString();
-                    var response = await _container.PatchItemAsync<GetProjectDto>(stringId, new PartitionKey(stringId), patchOperations);
+                    var response = await projectContainer.PatchItemAsync<GetProjectDto>(stringId, new PartitionKey(stringId), patchOperations);
 
                 }
                 catch (Exception ex)
@@ -84,7 +90,7 @@ namespace Project_Tasks.Function
                 try
                 {
                     var stringId = entity.Id.ToString();
-                    var response = await _container.DeleteItemAsync<GetProjectDto>(stringId, new PartitionKey(stringId));
+                    var response = await projectContainer.DeleteItemAsync<GetProjectDto>(stringId, new PartitionKey(stringId));
                 }
                 catch (Exception ex)
                 {
@@ -93,7 +99,7 @@ namespace Project_Tasks.Function
             }
         }
 
-        private async Task<List<GetProjectDto>> GetAllProjectsFromApi(string webApiBaseURL)
+        private async Task<List<T>> GetAllEntitiesFromApi<T>(string webApiBaseURL, string route)
         {
             using (var client = new HttpClient())
             {
@@ -101,15 +107,15 @@ namespace Project_Tasks.Function
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 //GET Method
-                HttpResponseMessage response = await client.GetAsync("projects");
+                HttpResponseMessage response = await client.GetAsync(route);
                 if (response.IsSuccessStatusCode)
                 {
-                    return await response.Content.ReadAsAsync<List<GetProjectDto>>();
+                    return await response.Content.ReadAsAsync<List<T>>();
                 }
                 else
                 {
                     Console.WriteLine("Internal server Error");
-                    return await Task.FromResult(Enumerable.Empty<GetProjectDto>().ToList());
+                    return await Task.FromResult(Enumerable.Empty<T>().ToList());
                 }
             }
         }
