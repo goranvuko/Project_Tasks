@@ -18,7 +18,7 @@ builder.Services.AddSingleton<ITaskCosmosService>(options =>
     string dbName = builder.Configuration.GetSection("AzureCosmosDbSettings")
     .GetValue<string>("DatabaseName");
     string containerName = builder.Configuration.GetSection("AzureCosmosDbSettings")
-    .GetValue<string>("ContainerName");
+    .GetValue<string>("TaskContainerName");
 
     var cosmosClient = new CosmosClient(
         url,
@@ -35,7 +35,7 @@ builder.Services.AddSingleton<IProjectCosmosService>(options =>
     string dbName = builder.Configuration.GetSection("AzureCosmosDbSettings")
     .GetValue<string>("DatabaseName");
     string containerName = builder.Configuration.GetSection("AzureCosmosDbSettings")
-    .GetValue<string>("ContainerName");
+    .GetValue<string>("ProjectContainerName");
 
     var cosmosClient = new CosmosClient(
         url,
