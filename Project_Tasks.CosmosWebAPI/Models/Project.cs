@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace Project_Tasks;
+namespace Project_Tasks.CosmosWebAPI.Models;
 
 public class Project
 {

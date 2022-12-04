@@ -1,15 +1,16 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
+using Project_Tasks.CosmosWebAPI.Models;
 
 namespace Project_Tasks.CosmosWebAPI.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class ProjectsController : ControllerBase
+    public class ProjectsCotnroller : ControllerBase
     {
         private readonly IProjectCosmosService projectCosmosService;
 
-        public ProjectsController(IProjectCosmosService projectCosmosService)
+        public ProjectsCotnroller(IProjectCosmosService projectCosmosService)
         {
             this.projectCosmosService = projectCosmosService;
         }

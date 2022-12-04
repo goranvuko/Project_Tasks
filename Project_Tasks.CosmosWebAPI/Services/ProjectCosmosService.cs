@@ -1,6 +1,6 @@
 ﻿using Microsoft.Azure.Cosmos;
 using Microsoft.Azure.Cosmos.Linq;
-using Project_Tasks;
+using Project_Tasks.CosmosWebAPI.Models;
 
 public class ProjectCosmosService : IProjectCosmosService
 {

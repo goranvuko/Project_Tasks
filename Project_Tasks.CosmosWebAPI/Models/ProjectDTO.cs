@@ -1,4 +1,4 @@
-namespace Project_Tasks.CosmosWebAPI
+namespace Project_Tasks.CosmosWebAPI.Models
 {
     public class ProjectDTO
     {

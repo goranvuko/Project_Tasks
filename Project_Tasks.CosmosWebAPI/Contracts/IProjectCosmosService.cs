@@ -1,4 +1,4 @@
-﻿using Project_Tasks;
+﻿using Project_Tasks.CosmosWebAPI.Models;
 
 public interface IProjectCosmosService
 {

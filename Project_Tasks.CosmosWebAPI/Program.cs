@@ -9,6 +9,23 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddSingleton<ITaskCosmosService>(options =>
+{
+    string url = builder.Configuration.GetSection("AzureCosmosDbSettings")
+    .GetValue<string>("URL");
+    string primaryKey = builder.Configuration.GetSection("AzureCosmosDbSettings")
+    .GetValue<string>("PrimaryKey");
+    string dbName = builder.Configuration.GetSection("AzureCosmosDbSettings")
+    .GetValue<string>("DatabaseName");
+    string containerName = builder.Configuration.GetSection("AzureCosmosDbSettings")
+    .GetValue<string>("ContainerName");
+
+    var cosmosClient = new CosmosClient(
+        url,
+        primaryKey
+    );
+    return new TaskCosmosService(cosmosClient, dbName, containerName);
+});
 builder.Services.AddSingleton<IProjectCosmosService>(options =>
 {
     string url = builder.Configuration.GetSection("AzureCosmosDbSettings")
