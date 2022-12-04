@@ -21,7 +21,7 @@ namespace Project_Tasks.Function
         }
         public async Task Sync(string webApiURL, string cosmosDbURL)
         {
-           // await SyncProjects(webApiURL, cosmosDbURL);
+            await SyncProjects(webApiURL, cosmosDbURL);
             await SyncTasks(webApiURL, cosmosDbURL);
         }
 
@@ -43,7 +43,7 @@ namespace Project_Tasks.Function
             await UpdateExistingProjects(entitiesToUpdate);
 
             var entitiesToDelete = cosmosProjects.Where(t => idsToDelete.Contains(t.Id));
-            await DeleteExistingProjects(entitiesToDelete);
+            await DeleteExistingEntities(entitiesToDelete);
         }
         private async Task SyncTasks(string webApiURL, string cosmosDbURL)
         {
@@ -143,21 +143,7 @@ namespace Project_Tasks.Function
                 }
             }
         }
-        private async Task DeleteExistingProjects(IEnumerable<GetProjectDto> projects)
-        {
-            foreach (var entity in projects)
-            {
-                try
-                {
-                    var stringId = entity.Id.ToString();
-                    var response = await projectContainer.DeleteItemAsync<GetProjectDto>(stringId, new PartitionKey(stringId));
-                }
-                catch (Exception ex)
-                {
-                    throw new Exception($"Failed to delete project with id: {entity.Id}");
-                }
-            }
-        }
+       
         private async Task DeleteExistingEntities<T>(IEnumerable<T> entities) where T : Entity
         {
             foreach (var entity in entities)

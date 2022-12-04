@@ -23,7 +23,8 @@ namespace Project_Tasks.Function
         [FunctionName("ProjectTasksFunction")]
 
         //0 0 * * * * , run every hour
-        public async Task Run([TimerTrigger("*/5 * * * * *")] TimerInfo myTimer, ILogger log, ExecutionContext context)
+        //*/10 * * * * *, run every 10 sec
+        public async Task Run([TimerTrigger("0 0 * * * * ")] TimerInfo myTimer, ILogger log, ExecutionContext context)
         {
             log.LogInformation($"C# Timer trigger function executed at: {DateTime.Now}");
 

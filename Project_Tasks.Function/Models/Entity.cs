@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace Project_Tasks.Function.Models
 {
-    internal class Entity
+    public class Entity
     {
+        public int Id { get; set; }
     }
 }
