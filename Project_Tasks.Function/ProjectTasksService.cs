@@ -3,19 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http.Headers;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 using Project_Tasks.Function.Models;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Azure.Cosmos;
-using System.ComponentModel;
-using Microsoft.Azure.Cosmos.Serialization.HybridRow.Schemas;
 
 namespace Project_Tasks.Function
 {
     public class ProjectTasksService : IProjectTasksService
     {
-        private readonly Microsoft.Azure.Cosmos.Container _container;
+        private readonly Container _container;
 
         public ProjectTasksService(CosmosClient cosmosClient, string databaseName, string containerName)
         {
@@ -50,7 +46,8 @@ namespace Project_Tasks.Function
                 try
                 {
                     var dto = new AddProjectDto { Id = entity.Id.ToString(), Code = entity.Code, Name = entity.Name };
-                    var response = await _container.CreateItemAsync(dto, new Microsoft.Azure.Cosmos.PartitionKey(dto.Id));
+                    var stringId = entity.Id.ToString();
+                    var response = await _container.CreateItemAsync(dto, new PartitionKey(stringId));
                 }
                 catch (Exception ex)
                 {
@@ -64,28 +61,15 @@ namespace Project_Tasks.Function
             {
                 try
                 {
-                    ItemResponse<GetProjectDto> res = await _container.ReadItemAsync<GetProjectDto>(entity.Id.ToString(), new Microsoft.Azure.Cosmos.PartitionKey(entity.Id));
-                    //Get Existing Item
-                    var existingItem = res.Resource;
-                    //Replace existing item values with new values
-                    existingItem.Name = entity.Name;
-                    existingItem.Code = entity.Code;
-                    
-                    var updateRes = await _container.ReplaceItemAsync(existingItem, entity.Id.ToString(), new Microsoft.Azure.Cosmos.PartitionKey(entity.Id));
-                    
-                    //ItemResponse<GetProjectDto> itemResponse = await _container.ReadItemAsync<GetProjectDto>(entity.Id.ToString(), new PartitionKey(entity.Id));
-                    //var itemBody = itemResponse.Resource;
-                    //itemBody.Name= entity.Name;
-                    //itemBody.Id=entity.Id;
-                    //itemBody.Code = entity.Code;
-                    //var response = await _container.ReplaceItemAsync(itemBody,entity.Id.ToString(), new PartitionKey(entity.Id));
+                    IReadOnlyList<PatchOperation> patchOperations = new List<PatchOperation>
+                    {
+                        PatchOperation.Replace("/name", entity.Name),
+                        PatchOperation.Replace("/code", entity.Code)
+                    };
 
-                    //IReadOnlyList<PatchOperation> patchOperations = new List<PatchOperation>
-                    //{
-                    //    PatchOperation.Replace("/name", entity.Name),
-                    //    PatchOperation.Replace("/code", entity.Code)
-                    //};
-                    //var response = await _container.PatchItemAsync<GetProjectDto>(entity.Id.ToString(), new PartitionKey(entity.Id),patchOperations);
+                    var stringId = entity.Id.ToString();
+                    var response = await _container.PatchItemAsync<GetProjectDto>(stringId, new PartitionKey(stringId), patchOperations);
+
                 }
                 catch (Exception ex)
                 {
@@ -99,7 +83,8 @@ namespace Project_Tasks.Function
             {
                 try
                 {
-                    var response = await _container.DeleteItemAsync<GetProjectDto>(entity.Id.ToString(), new Microsoft.Azure.Cosmos.PartitionKey(entity.Id));
+                    var stringId = entity.Id.ToString();
+                    var response = await _container.DeleteItemAsync<GetProjectDto>(stringId, new PartitionKey(stringId));
                 }
                 catch (Exception ex)
                 {
@@ -124,7 +109,7 @@ namespace Project_Tasks.Function
                 else
                 {
                     Console.WriteLine("Internal server Error");
-                    return await Task.FromResult<List<GetProjectDto>>(Enumerable.Empty<GetProjectDto>().ToList());
+                    return await Task.FromResult(Enumerable.Empty<GetProjectDto>().ToList());
                 }
             }
         }
