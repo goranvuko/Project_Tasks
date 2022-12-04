@@ -20,9 +20,10 @@ namespace Project_Tasks.CosmosWebAPI.Controllers
             var tasks =await taskCosmosService.GetAllTasksAsync();
             return Ok(tasks.Select(t=> new TaskDTO
             {
-                Id = t.Id,  
+                Id = t.Id,
+                ProjectId = t.ProjectId,
                 Name = t.Name,
-                Description = t.Description,
+                Description = t.Description
             }));
         }
     }

@@ -34,7 +34,18 @@ namespace Project_Tasks.Function
                 .Build();
             var webApiBaseURL = config["WebApiURL"];
             string cosmosDbURL = config["CosmosApiURL"];
-            await this.projectTasksService.Sync(webApiBaseURL, cosmosDbURL,"projects");
+            try
+            {
+                log.LogInformation($"Synchronisation started at {DateTime.Now}");
+
+                await this.projectTasksService.Sync(webApiBaseURL, cosmosDbURL, "Projects");
+
+                log.LogInformation($"Synchronisation finished successfully at {DateTime.Now}");
+            }
+            catch (Exception ex)
+            {
+                log.LogError($"Synchronisation failed at {DateTime.Now} with error: {ex}");
+            }
         }
     }
 }

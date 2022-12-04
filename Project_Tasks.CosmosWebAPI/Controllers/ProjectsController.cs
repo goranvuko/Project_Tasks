@@ -6,11 +6,11 @@ namespace Project_Tasks.CosmosWebAPI.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class ProjectsCotnroller : ControllerBase
+    public class ProjectsController : ControllerBase
     {
         private readonly IProjectCosmosService projectCosmosService;
 
-        public ProjectsCotnroller(IProjectCosmosService projectCosmosService)
+        public ProjectsController(IProjectCosmosService projectCosmosService)
         {
             this.projectCosmosService = projectCosmosService;
         }

@@ -10,5 +10,7 @@ namespace Project_Tasks.CosmosWebAPI.Models
         public string Name { get; set; }
         [JsonProperty("description")]
         public string Description { get; set; }
+        [JsonProperty("project_id")]
+        public string ProjectId { get; set; }
     }
 }
