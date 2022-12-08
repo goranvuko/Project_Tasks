@@ -18,5 +18,6 @@ namespace Project_Tasks.Domain
             Name = name;
             Code = code;
         }
+        //ovo je komentar za master rad
     }
 }
