@@ -8,6 +8,7 @@ namespace Project_Tasks.Domain
 {
     internal class Project
     {
+        //ovo je na novoj grani1
         public int Id { get;  }
         public string Name { get; }
         public string Code { get;  }
